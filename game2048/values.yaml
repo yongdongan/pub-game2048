@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 appName: "game2048"
-replicaCount: 3
+replicaCount: 1
 
 image:
   repository: "386474451889.dkr.ecr.ap-northeast-2.amazonaws.com/yongdong-eks-app"
