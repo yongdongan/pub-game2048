@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-ingress
+  labels:
+    name: argocd-ingress
+  namespace: argocd
+  annotations:
+    kubernetes.io/ingress.class: alb
+    # alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-northeast-2:386474451889:certificate/16ffb5e7-3278-47e9-9c13-5dcbf4bbc39f
+    alb.ingress.kubernetes.io/load-balancer-name: yongdong-argocd
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/healthcheck-path: /*
+    external-dns.alpha.kubernetes.io/hostname: argocd.ydantest.com
+
+spec:
+  ingressClassName: alb
+  rules:
+  - http:
+      paths:
+      - pathType: ImplementationSpecific
+        path: "/*"
+        backend:
+          service:
+            name: argocd-server
+            port:
+              number: 80
